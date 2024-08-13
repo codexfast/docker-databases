@@ -1,10 +1,25 @@
 services:
   db:
     image: mysql:8.0.36
+    volumes:
+      - db-data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
-    container_name: local-mysql
+    container_name: dev-mysql
     environment:
       MYSQL_ROOT_PASSWORD: 12345
+      # MYSQL_DATABASE: iso
     restart: always
+    networks:
+      - backnet
+
     ports:
       - 3306:3306
+    expose:
+      - 3306
+      - 33060
+
+volumes:
+  db-data:
+
+networks:
+  backnet:
